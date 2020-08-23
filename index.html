@@ -4,11 +4,11 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>¿Por que programación funcional?</title>
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css" id="theme">
+		<link rel="stylesheet" href="dist/theme/night.css" id="theme">
 
 		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
@@ -16,8 +16,99 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section>
+          <h2>
+            ¿Por qué programación funcional?
+          </h2>
+        </section>
+				<section>
+          <h3>
+            Meta: ¿por que hablar sobre esto?
+          </h3>
+          <br/>
+          <ul>
+            <li class="fragment">
+              Conceptos útiles que nos dan seguridad a la hora de escribir código
+            </li>
+            <li class="fragment">
+              La programación funcional está ganando terreno a OO que viene dominando hace más de 3
+              décadas.
+            </li>
+            <li class="fragment">
+              Hay muchos conceptos funcionales que usamos en el día a día sin saber.
+            </li>
+            <li class="fragment">
+              La mayoría de los programas que usamos soportan un estilo funcional.
+            </li>
+          </ul>
+          <aside data-markdown class="notes">
+            - Vamos a ver más adelante estos conceptos que podemos agregar a nuestro toolbelt para
+            escribir código mucho más conciso y "seguro".
+            - Hacer mención a la charla de Richard Feldman (parte del core team de Elm) sobre por
+            que la programación funcional no es la norma y por que OO está donde está por una serie
+            de casualidades.
+            - Los lenguajes de programación 100% funcionales puede que sean un poco más complejos de
+            lo que estamos acostumbrados, pero no hace falta usar esos para hacer programación
+            funcional.
+            - Dar ejemplo de python o javascript como lenguajes que soportan estilo funcional y
+            mencionar que el resto de la presentación va a usar javascript como ejempol.
+          </aside>
+        </section>
+        <section>
+          <h2>
+            ¿Qué es una función?
+          </h2>
+          TODO: explicar el concepto matemático y contrastarlo con como se usa en la programación
+          hoy en día, dando pié a la siguiente sección.
+        </section>
+        <section>
+          <h2>
+            Funciones "puras"
+          </h2>
+          TODO: tomar desde la explicación anterior, la programación funcional revaloriza la idea
+          original de una función. Esta decisión no es arbitraria, sino que hacerlo nos dá
+          beneficios.
+        </section>
+        <section>
+          <h2>
+            Algunas herramientas del mundo funcional
+          </h2>
+        </section>
+        <section>
+          <h2>
+            Reusabilidad
+          </h2>
+        </section>
+        <section>
+          <h2>
+            Type classes
+          </h2>
+        </section>
+        <section>
+          <h2>
+            Comparación del estilo funcional con otros conceptos
+          </h2>
+        </section>
+        <section>
+          <h2>
+            ¿Que hace que un lenguaje sea funcional?
+          </h2>
+        </section>
+        <section>
+          <h2>
+            Conclusiones
+          </h2>
+        </section>
+        <section>
+          <h1>
+            ¿Preguntas?
+          </h1>
+        </section>
+        <section>
+          <h2>
+            Bibliografía
+          </h2>
+        </section>
 			</div>
 		</div>
 
@@ -31,6 +122,8 @@
 			// - https://revealjs.com/config/
 			Reveal.initialize({
 				hash: true,
+        width: '80%',
+        height: '100%',
 
 				// Learn about plugins: https://revealjs.com/plugins/
 				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
