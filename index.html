@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>¿Por que programación funcional?</title>
+		<title>Demistificando la programación funcional</title>
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
@@ -18,56 +18,269 @@
 			<div class="slides">
 				<section>
           <h2>
-            ¿Por qué programación funcional?
+            Demistificando la programación funcional
           </h2>
         </section>
 				<section>
           <h3>
-            Meta: ¿por que hablar sobre esto?
+            Meta
           </h3>
           <br/>
           <ul>
             <li class="fragment">
-              Conceptos útiles que nos dan seguridad a la hora de escribir código
+              Plantea conceptos útiles que nos dan seguridad a la hora de escribir código
             </li>
             <li class="fragment">
-              La programación funcional está ganando terreno a OO que viene dominando hace más de 3
-              décadas.
+              Hay muchos conceptos funcionales que usamos en el día a día sin saber
             </li>
             <li class="fragment">
-              Hay muchos conceptos funcionales que usamos en el día a día sin saber.
+              La mayoría de los lenguajes que usamos soportan un estilo funcional
             </li>
             <li class="fragment">
-              La mayoría de los programas que usamos soportan un estilo funcional.
+              Está ganando terreno a la OO que viene dominando hace más de 3 décadas
             </li>
           </ul>
           <aside data-markdown class="notes">
             - Vamos a ver más adelante estos conceptos que podemos agregar a nuestro toolbelt para
             escribir código mucho más conciso y "seguro".
-            - Hacer mención a la charla de Richard Feldman (parte del core team de Elm) sobre por
-            que la programación funcional no es la norma y por que OO está donde está por una serie
-            de casualidades.
             - Los lenguajes de programación 100% funcionales puede que sean un poco más complejos de
             lo que estamos acostumbrados, pero no hace falta usar esos para hacer programación
             funcional.
             - Dar ejemplo de python o javascript como lenguajes que soportan estilo funcional y
-            mencionar que el resto de la presentación va a usar javascript como ejempol.
+            mencionar que el resto de la presentación va a usar javascript como ejemplo.
+            - Hacer mención a la charla de Richard Feldman (parte del core team de Elm) sobre por
+            que la programación funcional no es la norma y por que OO está donde está por una serie
+            de casualidades.
           </aside>
         </section>
         <section>
-          <h2>
-            ¿Qué es una función?
-          </h2>
-          TODO: explicar el concepto matemático y contrastarlo con como se usa en la programación
-          hoy en día, dando pié a la siguiente sección.
+          <section>
+            <h2>
+              ¿Qué es una función?
+            </h2>
+          </section>
+          <section>
+            Es una
+            <span class="fragment highlight-current-red">
+              relación binaria entre dos conjuntos
+            </span>
+            que asocia cada elemento del primer conjunto con
+            <span class="fragment highlight-current-red">
+              exactamente un elemento
+            </span>
+            del segundo conjunto.
+            <aside data-markdown class="notes">
+              - Un conjunto es una colleción de elementos definidos. Es común hablar del conjunto de
+              números naturales o números reales.
+              - Relación binaria se refiere a un subconjunto del producto cartesiano de los dos
+              conjuntos, es decir pares donde un elemento corresponde al primer conjunto y el
+              segundo conjunto.
+              - Remarcamos la idea de que la relación es con exactamente un elemento del segundo
+              conjunto, es decir, para un mismo valor del primer conjunto no puede haber dos
+              elementos del segundo conjunto que satisfazcan la función.
+            </aside>
+          </section>
+          <section>
+            <img
+              src="images/function-1.svg"
+              height="600"
+              class="fragment fade-in-then-semi-out"
+            />
+            <img
+              src="images/function-2.svg"
+              height="600"
+              class="fragment"
+            />
+            <aside data-markdown class="notes">
+              - Una forma de verlo es con un gráfico de conjuntos.
+              - Pero otra forma interesante de verlo es como una caja donde entra un valor y sale
+              otro, siguiendo las reglas definidas en la definición.
+            </aside>
+          </section>
+          <section>
+            <pre><code
+              class="javascript"
+              data-trim
+              data-noescape
+            >
+              function elevarAlCuadrado(x) {
+                return x * x;
+              }
+            </code></pre>
+          </section>
+          <section>
+            Pero, cuando programamos...
+            <h3 class="fragment">
+              ¿Las funciones se comportan de esta forma?
+            </h3>
+          </section>
+          <section>
+            <pre><code
+              class="javascript"
+              data-trim
+              data-noescape
+              data-line-numbers="1-12|3|6|7|8|10-13|15-16|19|23-27"
+            >
+              const descuentosCache = {};
+
+              async function calcularDescuento(carrito) {
+                const total = 0;
+
+                for (let i = 0; i < carrito.productos.length; i++) {
+                  const producto = carrito.productos[i];
+                  let descuento = descuentosCache[producto.id];
+
+                  if (descuento == null) {
+                    const descuento = await ServicioDescuentos.obtenerDescuento(producto.id);
+                    descuentosCache[producto.id] = descuento;
+                  }
+
+                  total += descuento;
+                  producto.descuento = descuento;
+                }
+
+                carrito.descuento = total;
+              }
+
+              // somewhere else...
+              const productos = [
+                {id: 1},
+                {id: 2},
+              ];
+              calcularDescuentos(productos);
+            </code></pre>
+            <aside data-markdown class="notes">
+              - Las funciones que hacemos en el día a día hacen mucho más que recibir un valor y
+              devolver una computación.
+                - Accedemos servicios externos.
+                - Podemos modificar información que nos llega por parámetros.
+                - Podemos modificar estados globales.
+              - Claramente esto es muchisimo más complejo y flexible que las funciones matemáticas
+              que veiamos antes.
+              - Esa flexibilidad viene con un precio.
+            </aside>
+          </section>
         </section>
         <section>
-          <h2>
-            Funciones "puras"
-          </h2>
-          TODO: tomar desde la explicación anterior, la programación funcional revaloriza la idea
-          original de una función. Esta decisión no es arbitraria, sino que hacerlo nos dá
-          beneficios.
+          <section>
+            <h2
+              class="fragment strike shrink"
+              data-fragment-index="1"
+            >
+              <span class="fragment highlight-current-red" data-fragment-index="0">
+                Programación
+              </span>
+              funcional
+            </h2>
+            <h2
+              class="fragment grow"
+              data-fragment-index="1"
+            >
+              <span
+                class="fragment"
+                data-fragment-index="1"
+              >
+                <span class="fragment highlight-current-red" data-fragment-index="1">
+                  Estilo
+                </span>
+                funcional
+              </span>
+            </h2>
+            <aside data-markdown class="notes">
+              - Ahora que tenemos un poco más claro que es una función, hablemos de programación
+              funcional.
+              - Pero antes de ir al detalle, me quiero detener un segundo en la palabra
+              "programación": nos hace pensar de que estamos hablando de una forma completamente
+              diferente de programar, usando un lenguaje, estrucutras de control u estructuras de
+              datos completamente diferentes.
+              - Por es prefiero llamarlo "estilo funcional"; la palabra estilo tiene mucho menos
+              peso: ya no hablamos de una programación completamente diferente, sino de una
+              alternativa a como hacer ciertas cosas, usando los mismos conceptos que ya conocemos,
+              pero de una forma diferente.
+            </aside>
+          </section>
+          <section>
+            <h2>
+              Funciones "puras"
+            </h2>
+            <aside data-markdown class="notes">
+              - Este estilo conciste principalmente en el uso de funciones "puras".
+            </aside>
+          </section>
+          <section>
+            <h2>
+              Para la misma entrada, la misma salida
+            </h2>
+            <aside data-markdown class="notes">
+              - Volvemos a las bases con respecto a la definición matemática de funciones que
+              veiamos antes.
+              - Dado una cierta entrada, devolvemos una salida, siempre la misma.
+              - ¿Que implica esto a nivel de código?
+            </aside>
+          </section>
+          <section>
+            <h2>
+              La función solo debe hacer uso de los parámetros que recibe
+            </h2>
+            <p class="fragment">
+              No debe hacer uso de información "externa" a la función
+            </p>
+            <aside data-markdown class="notes">
+              - Información externa se refiere desde estado global hasta llamadas a internet
+            </aside>
+          </section>
+          <section>
+            <h2>
+              Evitar efectos secundarios
+            </h2>
+            <p class="fragment">
+              No modificar los parámetros recibidos
+            </p>
+            <p class="fragment">
+              No modificar estado "externo" a la función
+            </p>
+            <aside data-markdown class="notes">
+              - Considerar a los parámetros inmutables.
+              - De nuevo, no acceder a estado externo ni modificarlo.
+            </aside>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h2>
+              Beneficios
+            </h2>
+          </section>
+          <section>
+            Referential transparency: the function call can be replaced by the output value.
+          </section>
+          <section>
+            Self documented (principle of least surprise): we know the functions don’t touch anything outside themselves, so that gives us reassurance about what we’re doing.
+          </section>
+          <section>
+            Cacheable: we can save the result of a given call with certain parameters through memoization.
+          </section>
+          <section>
+            Easily testeable: we can insert inputs and check the expected outputs.
+          </section>
+        </section>
+        <section>
+          <section>
+            <h2>
+              Pero si todas nuestras funciones son puras, ¿cómo programamos cosas que <b>necesitan</b>
+              tener efectos secundarios?
+            </h2>
+            TODO: no estoy seguro de si poner esto antes o después de los beneficios
+            <aside data-markdown class="notes">
+              - Mucho de lo que programamos requiere acceder a información de servicios externos
+            </aside>
+          </section>
+          <section>
+            volvemos a mostrar el code example de antes
+          </section>
+          <section>
+            lo reescribimos de manera funcional
+          </section>
         </section>
         <section>
           <h2>
